@@ -14,7 +14,7 @@ type Postgres struct {
 }
 
 func (cfg Config) ConnectionPostgres() (*Postgres, error) {
-	dbConnString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
+	dbConnString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=require",
 		cfg.PgsqlDB.DbUser,
 		cfg.PgsqlDB.DbPassword,
 		cfg.PgsqlDB.DbHost,
@@ -22,8 +22,8 @@ func (cfg Config) ConnectionPostgres() (*Postgres, error) {
 		cfg.PgsqlDB.DbName,
 	)
 
+	fmt.Println("Connecting to database with:", dbConnString)
 	db, err := gorm.Open(postgres.Open(dbConnString), &gorm.Config{})
-
 	if err != nil {
 		log.Error().Err(err).Msg("[ConnectionPostgres-1] Failed to connect to database" + cfg.PgsqlDB.DbHost)
 		return nil, err
