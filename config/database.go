@@ -14,11 +14,11 @@ type Postgres struct {
 }
 
 func (cfg Config) ConnectionPostgres() (*Postgres, error) {
-	dbConnString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
-		cfg.PgsqlDB.DbHost,
-		cfg.PgsqlDB.DbPort,
+	dbConnString := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
 		cfg.PgsqlDB.DbUser,
 		cfg.PgsqlDB.DbPassword,
+		cfg.PgsqlDB.DbHost,
+		cfg.PgsqlDB.DbPort,
 		cfg.PgsqlDB.DbName,
 	)
 
